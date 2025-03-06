@@ -1,4 +1,3 @@
-# link-game-pt2
 import pygame
 import math
 pygame.init()
@@ -43,6 +42,7 @@ map = [
 brick = pygame.image.load('brick.png')
 dirt = pygame.image.load('dirt.png') 
 stone = pygame.image.load('stone.png')
+kirby = pygame.image.load('hasItem1.png')
 Link = pygame.image.load('link.png')  # load your spritesheet
 Link.set_colorkey((255, 0, 255))  # this makes bright pink (255, 0, 255) transparent (sort of)
 
@@ -52,6 +52,11 @@ ypos = 400 # ypos of player
 
 vx = 0
 vy = 0
+
+#item Variables
+itemX =200
+itemY = 200
+hasItem = False
 
 # animation variables variables
 frameWidth = 13
@@ -140,7 +145,7 @@ while not gameover:
         print("right collision!")
 
     if map[int((ypos  + 20) / 40)][int((xpos ) / 40)] == 4 or map[int((ypos + 20) / 40)][int((xpos ) / 40)]  == 2:
-        ypos-=3   
+        ypos-=3       if hasItem1 == False:
         print("down collision!") 
 
     if map[int((ypos  + 10) / 40)][int((xpos + 10 ) / 40)] == 5:
@@ -159,6 +164,12 @@ while not gameover:
             frameNum += 1
     if frameNum > 7:
         frameNum = 0
+        
+    #item collision
+        if xpos>190 and xpos<220 and ypos > 180 and ypos < 220:
+            #print("collision!")
+            hasItem = True
+        print(xpos, ypos)
 
 
 
@@ -173,6 +184,10 @@ while not gameover:
                 screen.blit(dirt, (j * 40, i * 40), (0, 0, 40, 40))
             if map[i][j] == 4:
                 screen.blit(stone, (j * 40, i * 40), (0, 0, 40, 40))
+    #Item
+    if hasItem1 == False:
+        #pygame.draw.screen.blit(screen,(50, 80, 200), (itemX, itemY, 20, 20))
+        screen.blit(kirby, itemX, itemY)
 
     # draw player
     screen.blit(Link, (xpos, ypos), (frameWidth * frameNum, RowNum * frameHeight, frameWidth, frameHeight))
